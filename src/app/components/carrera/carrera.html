@@ -1,0 +1,52 @@
+<app-header></app-header>
+<div class="container">
+    <h1>Carreras</h1>
+    <hr>
+    <button class="btn btn-sm btn-secondary me-2" (click)="listar()">Listar</button>
+    <button class="btn btn-sm btn-primary" (click)="abrirNuevo()">Agregar </button>
+    <table class="table w-50">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Carrera</th>
+                <th scope="col">Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let c of carreras; let i = index">
+                <th>{{i+1}}</th>
+                <td>{{c.nombre}}</td>
+                <td class="text-end">
+                    <button class="btn btn-sm btn-warning me-2" (click)="abrirEditar(c)">Editar</button>
+                    <button class="btn btn-sm btn-danger me-2" (click)="eliminar(c.id!)">Eliminar</button>
+                    
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div #modal class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{tituloModal}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="form" (ngSubmit)="guardar()">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input class="form-control" formControlName="nombre" />
+                        <div class="text-danger" *ngIf="form.controls.nombre.touched && form.controls.nombre.invalid">
+                            Ingrese un nombre (min 3)</div>
+                    </div>
+
+                    <div class="text-end">
+                        <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

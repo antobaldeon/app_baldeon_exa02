@@ -1,0 +1,77 @@
+<app-header></app-header>
+
+<div class="container">
+  <h1>Estudiantes</h1>
+  <hr>
+  <div class="mb-3">
+    <button class="btn btn-sm btn-secondary me-2">Listar</button>
+    <button class="btn btn-sm btn-primary" (click)="abrirNuevo()">Agregar</button>
+  </div>
+
+  <table class="table table-striped w-75">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">Fecha Nacimiento</th>
+        <th scope="col">Carrera</th>
+        <th scope="col">Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let e of estudiantes; let i = index">
+        <th>{{i+1}}</th>
+        <td>{{ e.nombre }}</td>
+        <td>{{ e.apellido }}</td>
+        <td>{{ e.fecha_nacimiento }}</td>
+        <td>{{ e.carreraNombre }}</td>
+        <td>
+          <button class="btn btn-sm btn-warning me-2" (click)="abrirEditar(e)">Editar</button>
+          <button class="btn btn-sm btn-danger" (click)="eliminar(e.id!)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+    
+  </table>
+</div>
+<!-- Modal -->
+<div class="modal fade" #modal tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form [formGroup]="form" (ngSubmit)="guardar()">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ tituloModal }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label>Nombre</label>
+            <input type="text" formControlName="nombre" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label>Apellido</label>
+            <input type="text" formControlName="apellido" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label>Fecha de nacimiento</label>
+            <input type="date" formControlName="fecha_nacimiento" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label>Carrera</label>
+            <select formControlName="carreraNombre" class="form-select">
+              <option *ngFor="let c of carreras" [ngValue]="c">{{ c.nombre }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success" [disabled]="form.invalid">Guardar</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
